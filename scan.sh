@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Init networks detetced per channel (total 14 channels, chanel in index 0 is not used)
-channels=(0 0 0 0 0 0 0 0 0 0 0 0 0 0)
+# Init result (ssid channel, 13 channels)
+result=(0 0 0 0 0 0 0 0 0 0 0 0 0 0)
 
 # Scan and parse
 while IFS= read -r line; do
@@ -19,11 +19,16 @@ while IFS= read -r line; do
   [[ "$line" =~ Encrypt ]] && enc=${line##*key:}
   [[ "$line" =~ ESSID ]] && {
       essid=${line##*ID:}
+      # Accumlate networks onin channel
+      result[$chn]=$((result[$chn]+1));
+      # Set ssid channel (if specified)
+      if [[ "$essid" == "\"$SSID\"" ]]; then
+        result[0]=$chn
+      fi
       # echo " $mac  $essid  $frq  $chn  $qual  $lvl  $enc"  # output after ESSID
-      # Accumlate networks on channels
-      channels[$chn]=$((channels[$chn]+1))
   }
+
 done
 
 # Return channels scan result
-echo ${channels[@]}
+echo "${result[@]}"

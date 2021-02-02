@@ -34,15 +34,16 @@ Name | Description | Default
 ---|---|---
 DELAY | Number of seconds between scans | 600 (10 minutes)
 WLAN | Interface to use | wlan0
+SSID | SSID name | 
 MQTT_URL | Mqtt broker IP | 192.168.0.100
 MQTT_TOPIC | Mqtt topic | wifi/scan
 
 ## Home assiatnt sensor
 
-The application publish the number of discovered networks in the state field, and total number of networks per channel in the channels field (index 0 is not used, channel 1 starts from index 1)
+The application publish the number of discovered networks in the state field, and total number of networks per channel in the channels field. The ssid channel will be set with the channle of the specified ssid (0 if not specified).
 
 ```
-{"state":6,"channels":[0,0,0,0,0,0,0,4,0,0,0,2,0,0]}
+{"state":6,"channels":[0,0,0,0,0,0,4,0,0,0,2,0,0]}
 ```
 
 The following sensor can be used to track the number of networks in wifi channel 7:
@@ -51,8 +52,9 @@ The following sensor can be used to track the number of networks in wifi channel
 sensor:
   - platform: mqtt
     name: Wifi channel 7
+    icon: mdi:wifi
     state_topic: "wifi/scan"
-    value_template: "{{ value_json['channels'][7] }}"
+    value_template: "{{ value_json['channels'][6] }}"
 ```
 
 ## Wifi channels and frequency

@@ -14,8 +14,15 @@ mqtt_topic="${MQTT_TOPIC:-wifi/scan}"
 
 while true
 do
-  channels=$(iwlist $wlan scan | bash scan.sh)
+  result=$( iwlist $wlan scan | bash scan.sh )
+  for i in ${result[@]}; do
+    channels+=($i)
+  done
 
+  # Extract ssid channel and reset first item
+  ssid_channel=${channels[0]}
+  channels=("${channels[@]:1}")
+  
   # Total number of networks
   total=0
   for i in ${channels[@]}; do
@@ -23,7 +30,7 @@ do
   done
 
   # Publish
-  message=`jo state=$total channels=$(jo -a ${channels[@]})`
+  message=`jo state=$total ssid_channel=$ssid_channel channels=$(jo -a ${channels[@]})`
   mosquitto_pub -h $mqtt_url -t $mqtt_topic -m $message
 
   # Wait before next scan
