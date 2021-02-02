@@ -1,4 +1,10 @@
-# Wifiscna
+<p align="left"><br>
+<a href="https://paypal.me/eyalco1967?locale.x=he_IL" target="_blank"><img src="http://khrolenok.ru/support_paypal.png" alt="PayPal" width="250" height="48"></a>
+</p>
+
+*Please :star: this repo if you find it useful*
+
+# Wifi Scan
 
 Run wifi scan to detect and publish number of active networks in each channel.
 
@@ -66,3 +72,10 @@ Channel 10 | 2.457 GHz
 Channel 11 | 2.462 GHz
 Channel 12 | 2.467 GHz
 Channel 13 | 2.472 GHz
+
+---
+
+I put a lot of work into making this repo and component available and updated to inspire and help others! I will be glad to receive thanks from you — it will give me new strength and add enthusiasm:
+<p align="center"><br>
+<a href="https://paypal.me/eyalco1967?locale.x=he_IL" target="_blank"><img src="http://khrolenok.ru/support_paypal.png" alt="PayPal" width="250" height="48"></a>
+</p>
