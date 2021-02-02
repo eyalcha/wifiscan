@@ -16,11 +16,8 @@ while true
 do
     channels=$(iwlist $wlan scan | bash scan.sh)
 
-    # Date time
-    dt=$(date +"%T");
-
     # Publish
-    message=`jo time=$dt channels=$(jo -a ${channels[@]})`
+    message=`jo state=0 channels=$(jo -a ${channels[@]})`
     mosquitto_pub -h $mqtt_url -t $mqtt_topic -m $message
 
     sleep $delay
