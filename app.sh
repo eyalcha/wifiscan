@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Delay in seconds (default - 1 hour)
-delay="${DELAY:-3600}"
+# Delay in seconds (default - 10 minutes)
+delay="${DELAY:-600}"
 
 # Wifi interface (default - wlan0)
 wlan="${WLAN:-wlan0}"
