@@ -30,6 +30,8 @@ docker run -d --restart unless-stopped --name wifiscan --network host --privileg
 
 ## Configuration
 
+Configuration is done with environment variables:
+
 Name | Description | Default
 ---|---|---
 DELAY | Number of seconds between scans | 600 (10 minutes)
@@ -39,7 +41,7 @@ MQTT_URL | Mqtt broker IP | 192.168.0.100
 MQTT_TOPIC | Mqtt topic | wifi/scan
 LEVEL | Threshold dBm level for counting | -999
 
-## Home assiatnt sensor
+## Home assistant sensor
 
 The application publish the number of discovered networks in the state field, and total number of networks per channel in the channels field. The ssid channel will be set with the channle of the specified ssid (0 if not specified).
 
@@ -57,6 +59,11 @@ sensor:
     state_topic: "wifi/scan"
     value_template: "{{ value_json['channels'][6] }}"
 ```
+
+## Lovelace
+
+With [bar-card](https://github.com/custom-cards/bar-card) you can also show a graph of the channels:
+![Channels](./bar.jpg)
 
 ## Wifi channels and frequency
 
