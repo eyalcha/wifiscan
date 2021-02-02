@@ -14,6 +14,8 @@ mqtt_topic="${MQTT_TOPIC:-wifi/scan}"
 
 while true
 do
+  channels=()
+  
   result=$( iwlist $wlan scan | bash scan.sh )
   for i in ${result[@]}; do
     channels+=($i)
