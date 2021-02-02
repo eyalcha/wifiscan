@@ -33,6 +33,12 @@ MQTT_TOPIC | Mqtt topic | wifi/scan
 
 ## Home assiatnt sensor
 
+The application publish the number of discovered networks in the state field, and total number of networks per channel in the channels field (index 0 is not used, channel 1 starts from index 1)
+
+```
+{"state":6,"channels":[0,0,0,0,0,0,0,4,0,0,0,2,0,0]}
+```
+
 The following sensor can be used to track the number of networks in wifi channel 7:
 
 ```
@@ -45,16 +51,18 @@ sensor:
 
 ## Wifi channels and frequency
 
-Channel 01 : 2.412 GHz
-Channel 02 : 2.417 GHz
-Channel 03 : 2.422 GHz
-Channel 04 : 2.427 GHz
-Channel 05 : 2.432 GHz
-Channel 06 : 2.437 GHz
-Channel 07 : 2.442 GHz
-Channel 08 : 2.447 GHz
-Channel 09 : 2.452 GHz
-Channel 10 : 2.457 GHz
-Channel 11 : 2.462 GHz
-Channel 12 : 2.467 GHz
-Channel 13 : 2.472 GHz
+Channel | Frequency
+---|---
+Channel 01 | 2.412 GHz
+Channel 02 | 2.417 GHz
+Channel 03 | 2.422 GHz
+Channel 04 | 2.427 GHz
+Channel 05 | 2.432 GHz
+Channel 06 | 2.437 GHz
+Channel 07 | 2.442 GHz
+Channel 08 | 2.447 GHz
+Channel 09 | 2.452 GHz
+Channel 10 | 2.457 GHz
+Channel 11 | 2.462 GHz
+Channel 12 | 2.467 GHz
+Channel 13 | 2.472 GHz
