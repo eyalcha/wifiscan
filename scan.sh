@@ -3,6 +3,12 @@
 # Init result (ssid channel, 13 channels)
 result=(0 0 0 0 0 0 0 0 0 0 0 0 0 0)
 
+# SSID to match
+ssid=$SSID
+
+# level in dbm
+level=${LEVEL:--999}
+
 # Scan and parse
 while IFS= read -r line; do
 
@@ -20,9 +26,11 @@ while IFS= read -r line; do
   [[ "$line" =~ ESSID ]] && {
       essid=${line##*ID:}
       # Accumlate networks onin channel
-      result[$chn]=$((result[$chn]+1));
+      if [ $lvl -gt $level ]; then
+        result[$chn]=$((result[$chn]+1));
+      fi
       # Set ssid channel (if specified)
-      if [[ "$essid" == "\"$SSID\"" ]]; then
+      if [[ "$essid" == "\"$ssid\"" ]]; then
         result[0]=$chn
       fi
       # echo " $mac  $essid  $frq  $chn  $qual  $lvl  $enc"  # output after ESSID

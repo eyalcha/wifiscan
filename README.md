@@ -37,6 +37,7 @@ WLAN | Interface to use | wlan0
 SSID | SSID name | 
 MQTT_URL | Mqtt broker IP | 192.168.0.100
 MQTT_TOPIC | Mqtt topic | wifi/scan
+LEVEL | Threshold dBm level for counting | -999
 
 ## Home assiatnt sensor
 
