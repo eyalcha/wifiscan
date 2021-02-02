@@ -43,7 +43,7 @@ MQTT_TOPIC | Mqtt topic | wifi/scan
 The application publish the number of discovered networks in the state field, and total number of networks per channel in the channels field. The ssid channel will be set with the channle of the specified ssid (0 if not specified).
 
 ```
-{"state":6,"channels":[0,0,0,0,0,0,4,0,0,0,2,0,0]}
+{"state":6,"ssid_channel":6,"channels":[0,0,0,0,0,0,4,0,0,0,2,0,0]}
 ```
 
 The following sensor can be used to track the number of networks in wifi channel 7:
