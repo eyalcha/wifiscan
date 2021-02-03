@@ -60,6 +60,27 @@ sensor:
     value_template: "{{ value_json['channels'][6] }}"
 ```
 
+Sensor for the SSID channel (if SSID is specified in the configuration):
+
+```
+sensor:
+  - platform: mqtt
+    name: Wifi ssid channel
+    state_topic: "wifi/scan"
+    value_template: "{{ value_json.ssid_channel }}"
+```
+
+And the total number of detected networks:
+
+```
+sensor:
+  - platform: mqtt
+    name: Wifi total networks
+    icon: mdi:counter
+    state_topic: "wifi/scan"
+    value_template: "{{ value_json.state }}"
+```
+
 ## Lovelace
 
 With [bar-card](https://github.com/custom-cards/bar-card) you can also show a graph of the channels:
