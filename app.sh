@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# App version
+version="1.0.3"
+
 # Delay in seconds (default - 10 minutes)
 delay="${DELAY:-600}"
 
@@ -12,27 +15,43 @@ mqtt_url="${MQTT_URL:-192.168.0.100}"
 # Topic to publish results
 mqtt_topic="${MQTT_TOPIC:-wifi/scan}"
 
+echo
+echo "Wifi scan By Eyal Cohen, version $version"
+echo
+echo "Configuration:"
+echo
+echo "  Delay      - $delay"
+echo "  Interface  - $wlan"
+echo "  Mqtt URL   - $mqtt_url"
+echo "  Mqtt topic - $mqtt_topic"
+
 while true
 do
-  channels=()
+  values=()
   
-  result=$( iwlist $wlan scan | bash scan.sh )
-  for i in ${result[@]}; do
-    channels+=($i)
+  for i in $( iwlist $wlan scan | bash scan.sh ); do
+    values+=($i)
   done
 
   # Extract ssid channel and reset first item
-  ssid_channel=${channels[0]}
-  channels=("${channels[@]:1}")
-  
+  ssid_channel=${values[0]}
+  channels=("${values[@]:1:13}")
+  levels=("${values[@]:14:26}")
+
   # Total number of networks
   total=0
   for i in ${channels[@]}; do
     let total+=$i
   done
-
+  
+  # Convert to jsion array format
+  channels=$(printf ",%s" "${channels[@]}")
+  channels=$(echo \[${channels:1}\])
+  levels=$(printf ",%s" "${levels[@]}")
+  levels=$(echo \[${levels:1}\])
+  
   # Publish
-  message=`jo state=$total ssid_channel=$ssid_channel channels=$(jo -a ${channels[@]})`
+  message=$(echo \{\"state\":$total,\"version\":\"$version\",\"ssid_channel\":$ssid_channel,\"channels\":$channels,\"levels\":$levels\})
   mosquitto_pub -h $mqtt_url -t $mqtt_topic -m $message
 
   # Wait before next scan

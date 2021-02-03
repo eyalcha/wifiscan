@@ -1,13 +1,22 @@
 #!/bin/bash
 
-# Init result (ssid channel, 13 channels)
-result=(0 0 0 0 0 0 0 0 0 0 0 0 0 0)
-
 # SSID to match
 ssid=$SSID
 
-# level in dbm
+# Level in dbm. Only networks with higher level values will be counted.
 level=${LEVEL:--999}
+
+# Min level for levels array
+min_level=${MIN_LEVEL:--100}
+
+# Ssid chanle (if SSID specified)
+ssid_channel=0
+
+# Networks per channel
+networks=(0 0 0 0 0 0 0 0 0 0 0 0 0)
+
+# Channel max level
+levels=($min_level $min_level $min_level $min_level $min_level $min_level $min_level $min_level $min_level $min_level $min_level $min_level $min_level)
 
 # Scan and parse
 while IFS= read -r line; do
@@ -25,13 +34,16 @@ while IFS= read -r line; do
   [[ "$line" =~ Encrypt ]] && enc=${line##*key:}
   [[ "$line" =~ ESSID ]] && {
       essid=${line##*ID:}
-      # Accumlate networks onin channel
+      # Accumlate networks in channel
       if [ $lvl -gt $level ]; then
-        result[$chn]=$((result[$chn]+1));
+        networks[$chn]=$((networks[$chn]+1));
       fi
       # Set ssid channel (if specified)
       if [[ "$essid" == "\"$ssid\"" ]]; then
-        result[0]=$chn
+        ssid_channel=$chn
+      fi
+      if [ $lvl -gt ${levels[$chn]} ]; then
+        levels[$chn]="$lvl"
       fi
       # echo " $mac  $essid  $frq  $chn  $qual  $lvl  $enc"  # output after ESSID
   }
@@ -39,4 +51,4 @@ while IFS= read -r line; do
 done
 
 # Return channels scan result
-echo "${result[@]}"
+echo $ssid_channel "${networks[@]}" "${levels[@]}"

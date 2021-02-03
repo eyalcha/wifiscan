@@ -43,10 +43,16 @@ LEVEL | Threshold dBm level for counting | -999
 
 ## Home assistant sensor
 
-The application publish the number of discovered networks in the state field, and total number of networks per channel in the channels field. The ssid channel will be set with the channle of the specified ssid (0 if not specified).
+The application publish:
+
+  - App version
+  - Number of discovered networks in the state field
+  - Total number of networks per channel in the channels field.
+  - SSID channel with the channel of the specified SSID (0 if not specified).
+  - Highest level received per channel (in dBm)
 
 ```
-{"state":6,"ssid_channel":6,"channels":[0,0,0,0,0,0,4,0,0,0,2,0,0]}
+{"state":6,"version":"1.0.3","ssid_channel":6,"channels":[0,0,0,0,0,0,4,0,0,0,0,2,0],"levels":[-100,-100,-100,-100,-100,-100,-21,-100,-100,-100,-100,-64,-100]}
 ```
 
 The following sensor can be used to track the number of networks in wifi channel 7:
@@ -103,7 +109,6 @@ Channel 10 | 2.457 GHz
 Channel 11 | 2.462 GHz
 Channel 12 | 2.467 GHz
 Channel 13 | 2.472 GHz
-
 ---
 
 I put a lot of work into making this repo and component available and updated to inspire and help others! I will be glad to receive thanks from you — it will give me new strength and add enthusiasm:
