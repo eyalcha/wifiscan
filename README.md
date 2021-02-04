@@ -47,12 +47,13 @@ The application publish:
 
   - App version
   - Number of discovered networks in the state field
+  - Number of networks in the specified ssid channel
   - Total number of networks per channel in the channels field.
   - SSID channel with the channel of the specified SSID (0 if not specified).
   - Highest level received per channel (in dBm)
 
 ```
-{"state":6,"version":"1.0.3","ssid_channel":6,"channels":[0,0,0,0,0,0,4,0,0,0,0,2,0],"levels":[-100,-100,-100,-100,-100,-100,-21,-100,-100,-100,-100,-64,-100]}
+{"state":6,"version":"1.0.3","ssid_channel":6,"ssid_networks":4,"channels":[0,0,0,0,0,0,4,0,0,0,0,2,0],"levels":[-100,-100,-100,-100,-100,-100,-21,-100,-100,-100,-100,-64,-100]}
 ```
 
 The following sensor can be used to track the number of networks in wifi channel 7:

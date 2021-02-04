@@ -9,14 +9,14 @@ level=${LEVEL:--999}
 # Min level for levels array
 min_level=${MIN_LEVEL:--100}
 
-# Ssid chanle (if SSID specified)
+# Ssid channel (if SSID specified)
 ssid_channel=0
 
 # Networks per channel
-networks=(0 0 0 0 0 0 0 0 0 0 0 0 0)
+networks=(0 0 0 0 0 0 0 0 0 0 0 0 0 0)
 
 # Channel max level
-levels=($min_level $min_level $min_level $min_level $min_level $min_level $min_level $min_level $min_level $min_level $min_level $min_level $min_level)
+levels=($min_level $min_level $min_level $min_level $min_level $min_level $min_level $min_level $min_level $min_level $min_level $min_level $min_level $min_level)
 
 # Scan and parse
 while IFS= read -r line; do
@@ -42,6 +42,7 @@ while IFS= read -r line; do
       if [[ "$essid" == "\"$ssid\"" ]]; then
         ssid_channel=$chn
       fi
+      #      
       if [ $lvl -gt ${levels[$chn]} ]; then
         levels[$chn]="$lvl"
       fi
@@ -50,5 +51,6 @@ while IFS= read -r line; do
 
 done
 
+
 # Return channels scan result
-echo $ssid_channel "${networks[@]}" "${levels[@]}"
+echo $ssid_channel "${networks[@]:1}" "${levels[@]:1}"

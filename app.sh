@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # App version
-version="1.0.3"
+version="1.0.4"
 
 # Delay in seconds (default - 10 minutes)
 delay="${DELAY:-600}"
@@ -38,6 +38,10 @@ do
   channels=("${values[@]:1:13}")
   levels=("${values[@]:14:26}")
 
+  # Get the number of networks in the ssid channel
+  channel=$((ssid_channel-1))
+  ssid_networks=${channels[$channel]}
+
   # Total number of networks
   total=0
   for i in ${channels[@]}; do
@@ -51,7 +55,7 @@ do
   levels=$(echo \[${levels:1}\])
   
   # Publish
-  message=$(echo \{\"state\":$total,\"version\":\"$version\",\"ssid_channel\":$ssid_channel,\"channels\":$channels,\"levels\":$levels\})
+  message=$(echo \{\"state\":$total,\"version\":\"$version\",\"ssid_channel\":$ssid_channel,\"ssid_networks\":$ssid_networks,\"channels\":$channels,\"levels\":$levels\})
   mosquitto_pub -h $mqtt_url -t $mqtt_topic -m $message
 
   # Wait before next scan
